@@ -1,0 +1,107 @@
+﻿@page "/"
+
+@using Microsoft.EntityFrameworkCore
+@using ExportSettings.Models
+@using DevExpress.Export
+
+@inject IDbContextFactory<NorthwindContext> NorthwindContextFactory
+@implements IDisposable
+
+<DxGrid @ref="Grid"
+        CustomizeCellDisplayText="Grid_CustomizeCellDisplayText" 
+        Data="@Data">
+    <Columns>
+        <DxGridDataColumn FieldName="ProductName" Width="30%" />
+        <DxGridDataColumn FieldName="CategoryId" Width="10%" SortMode="GridColumnSortMode.DisplayText" Caption="Category" />
+        <DxGridDataColumn FieldName="QuantityPerUnit" Width="20%" />
+        <DxGridDataColumn FieldName="UnitPrice" Width="10%" DisplayFormat="c" />
+        <DxGridDataColumn FieldName="UnitsInStock" Width="10%" />       
+        <DxGridDataColumn FieldName="Total" Width="10%" UnboundType="GridUnboundColumnType.Decimal" DisplayFormat="c"
+                          UnboundExpression="[UnitPrice] * [UnitsInStock]"  />
+        <DxGridDataColumn FieldName="Discontinued" Width="10%" ExportEnabled="false" />
+    </Columns>
+</DxGrid>
+<DxButton Text="Export XLSX" Click="ExportXlsx_Click" />
+
+@code {
+    IGrid Grid { get; set; }
+    NorthwindContext Northwind { get; set; }
+    IEnumerable<Product> Data { get; set; }
+    IEnumerable<Category> Categories { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        Northwind = NorthwindContextFactory.CreateDbContext();
+        Categories = await Northwind.Categories.ToListAsync();
+        Data = await Northwind.Products.ToListAsync();       
+    }
+
+    void Grid_CustomizeCellDisplayText(GridCustomizeCellDisplayTextEventArgs e) {
+        if (e.FieldName == "CategoryId")
+            e.DisplayText = Categories.Where(c => c.CategoryId == (int)e.Value).First().CategoryName;
+    }
+
+    async Task ExportXlsx_Click() {
+        await Grid.ExportToXlsxAsync("ExportResult", new GridXlExportOptions() {
+            CustomizeCell = CustomizeCell,
+            CustomizeColumn = CustomizeColumn,
+            CustomizeSheet = CustomizeSheet,
+            ExportDisplayText = true,
+            ExportUnboundExpressionAsFunction = true,
+            RowExporting = RowExporting,
+            SheetName = "Products",           
+        });
+    }
+
+    void CustomizeColumn(GridExportCustomizeColumnEventArgs e) {
+        if (e.FieldName == "ProductName") {
+            e.Column.WidthInCharacters = 30;
+        } else 
+            e.Column.WidthInCharacters = 17;
+    }
+
+    void CustomizeCell(GridExportCustomizeCellEventArgs e) {
+        if (e.AreaType == DevExpress.Export.SheetAreaType.DataArea) {
+            decimal unitPrice = (decimal)e.DataItem.GetType().GetProperty("UnitPrice").GetValue(e.DataItem, null);
+            short quantity = (short)e.DataItem.GetType().GetProperty("UnitsInStock").GetValue(e.DataItem, null);
+            decimal total = unitPrice * quantity;
+            // Highlights a row when its Total > 1000
+            if (total > 1000) {
+                e.Formatting.BackColor = System.Drawing.Color.LightGreen;
+                e.Formatting.Font = new XlCellFont() { Italic = true };
+            }
+            // Sets the Handled property to true to apply the specified settings.
+            e.Handled = true;
+        }
+        if (e.AreaType == DevExpress.Export.SheetAreaType.Header) {
+            // Applies bold formatting to column headers
+            e.Formatting.Font = new XlCellFont() { Bold = true };
+            e.Handled = true;
+        }
+    }
+
+    void RowExporting(GridRowExportingEventArgs e) {
+        // Exports rows with Discontinued field value equal to false
+        if (!e.IsGroupRow & (bool)e.GetRowValue("Discontinued"))
+            e.Cancel = true;
+    }
+
+    void CustomizeSheet(GridExportCustomizeSheetEventArgs e) {
+        // Freezes the left column and the top row
+        e.Sheet.SplitPosition = new DevExpress.Export.Xl.XlCellPosition(1, 1);
+        // Specifies the document print settings
+        e.Sheet.PageMargins = new DevExpress.Export.Xl.XlPageMargins();
+        e.Sheet.PageMargins.PageUnits = DevExpress.Export.Xl.XlPageUnits.Centimeters;
+        e.Sheet.PageMargins.Left = 3.0;
+        e.Sheet.PageMargins.Right = 3.0;
+        e.Sheet.PageMargins.Top = 3.25;
+        e.Sheet.PageMargins.Bottom = 3.25;
+        e.Sheet.PageSetup.PaperKind = System.Drawing.Printing.PaperKind.A4;
+        e.Sheet.PageSetup.PageOrientation = DevExpress.Export.Xl.XlPageOrientation.Landscape;
+        e.Sheet.PrintTitles.SetColumns(0, 0);
+        e.Sheet.PrintTitles.SetRows(0, 0);
+    }
+
+    public void Dispose() {
+        Northwind?.Dispose();
+    }
+}
