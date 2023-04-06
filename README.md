@@ -5,7 +5,7 @@
 <!-- default badges end -->
 # Grid for Blazor - Customize an Exported Document
 
-This example demonstrates how to export the DevExpress Blazor Grid data to an XLSX file and customize the export result.
+This example demonstrates how to export the [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/grid) data to an XLSX file and customize the export result.
 
 ![Export Grid Data](export-grid-data.gif)
 
@@ -25,7 +25,7 @@ Allows you to customize a column in the result document.
 Allows you to customize sheet settings in the result document.
 
 **[ExportDisplayText](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridExportOptions.ExportDisplayText)**  
-Indicates whether the Grid exports cell values in the same format they are displayed in the grid.
+Specifies whether the Grid exports cell values in the same format they are displayed in the grid.
 
 **[ExportUnboundExpressionAsFunction](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.ExportUnboundExpressionAsFunction)**  
 Specifies whether the grid exports an unbound column expression as a function or as a result value.
