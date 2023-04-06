@@ -4,15 +4,15 @@
 <!-- default badges end -->
 # Grid for Blazor - Customize Export Settings
 
-This example demonstrates how to export the [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/grid) data to an XLSX file and customize the export result.
+This example demonstrates how to export [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/grid) data to an XLSX file and customize the export result.
 
 ![Export Grid Data](export-grid-data.gif)
 
 ## Overview
 
-Set a column's [ExportEnabled](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.ExportEnabled) property to `false` to prevent the Grid from exporting this column. To export grid data to an XLSX file, call the Grid's [ExportToXlsxAsync](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync(System.String-DevExpress.Blazor.GridXlExportOptions)) method. The method accepts a [GridXlExportOptions](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions) object as a parameter. Specify the parameter's properties to set up export settings.
+Set a column's [ExportEnabled](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGridDataColumn.ExportEnabled) property to `false` to prevent the Grid from exporting this column. To export data to an XLSX file, call the Grid's [ExportToXlsxAsync](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync(System.String-DevExpress.Blazor.GridXlExportOptions)) method. The method accepts a [GridXlExportOptions](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions) object as a parameter. Specify the parameter's properties to set up export settings.
 
-The example code sets the following `GridXlExportOptions` properties:
+The code example sets the following `GridXlExportOptions` properties:
 
 **[CustomizeCell](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridExportOptions.CustomizeCell)**  
 Allows you to customize a cell in the result document based on custom conditions.
@@ -27,7 +27,7 @@ Allows you to customize sheet settings in the result document.
 Specifies whether the Grid exports cell values in the format they are displayed.
 
 **[ExportUnboundExpressionAsFunction](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.ExportUnboundExpressionAsFunction)**  
-Specifies whether the grid exports an unbound column expression as a function or as a result value.
+Specifies whether the grid exports an unbound column expression as a function or as a calculated value.
 
 **[RowExporting](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridExportOptions.RowExporting)**  
 Allows you to filter exported data.
