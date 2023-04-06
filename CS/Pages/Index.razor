@@ -27,17 +27,17 @@
     IGrid Grid { get; set; }
     NorthwindContext Northwind { get; set; }
     IEnumerable<Product> Data { get; set; }
-    IEnumerable<Category> Categories { get; set; }
+    Dictionary<int, String> Categories { get; set; }
 
     protected override async Task OnInitializedAsync() {
         Northwind = NorthwindContextFactory.CreateDbContext();
-        Categories = await Northwind.Categories.ToListAsync();
+        Categories = await Northwind.Categories.ToDictionaryAsync(i => i.CategoryId, i => i.CategoryName);
         Data = await Northwind.Products.ToListAsync();       
     }
 
     void Grid_CustomizeCellDisplayText(GridCustomizeCellDisplayTextEventArgs e) {
         if (e.FieldName == "CategoryId")
-            e.DisplayText = Categories.Where(c => c.CategoryId == (int)e.Value).First().CategoryName;
+            e.DisplayText = Categories[Convert.ToInt32(e.Value)];
     }
 
     async Task ExportXlsx_Click() {
