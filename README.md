@@ -24,7 +24,7 @@ Allows you to customize a column in the result document.
 Allows you to customize sheet settings in the result document.
 
 **[ExportDisplayText](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridExportOptions.ExportDisplayText)**  
-Specifies whether the Grid exports cell values in the format they are displayed.
+Specifies whether the Grid exports cell values or [display text](https://docs.devexpress.com/Blazor/404278/grid/display-text) strings.
 
 **[ExportUnboundExpressionAsFunction](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.ExportUnboundExpressionAsFunction)**  
 Specifies whether the grid exports an unbound column expression as a function or as a calculated value.
