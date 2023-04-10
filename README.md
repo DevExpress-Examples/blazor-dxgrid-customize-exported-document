@@ -3,7 +3,7 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1157860)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
-# Grid for Blazor - Customize Export Settings
+# Grid for Blazor - How to customize export settings
 
 This example demonstrates how to export [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/grid) data to an XLSX file and customize the export result.
 
