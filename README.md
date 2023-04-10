@@ -15,13 +15,13 @@ Set a column's [ExportEnabled](https://docs.devexpress.com/Blazor/DevExpress.Bla
 The code example sets the following `GridXlExportOptions` properties:
 
 **[CustomizeCell](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridExportOptions.CustomizeCell)**  
-Allows you to customize a cell in the result document based on custom conditions.
+Allows you to customize a cell in the resulting document based on custom conditions.
 
 **[CustomizeColumn](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.CustomizeColumn)**  
-Allows you to customize a column in the result document.
+Allows you to customize a column in the resulting document.
 
 **[CustomizeSheet](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.CustomizeSheet)**  
-Allows you to customize sheet settings in the result document.
+Allows you to customize sheet settings in the resulting document.
 
 **[ExportDisplayText](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridExportOptions.ExportDisplayText)**  
 Specifies whether the Grid exports cell values or [display text](https://docs.devexpress.com/Blazor/404278/grid/display-text) strings.
@@ -33,7 +33,7 @@ Specifies whether the grid exports an unbound column expression as a function or
 Allows you to filter exported data.
 
 **[SheetName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.SheetName)**  
-Specifies a name of the sheet in the result document.
+Specifies a name of the sheet in the resulting document.
 
 ## Files to Look At
 
