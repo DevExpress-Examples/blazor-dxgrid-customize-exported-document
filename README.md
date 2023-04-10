@@ -35,7 +35,7 @@ Allows you to filter exported data.
 **[SheetName](https://docs.devexpress.com/Blazor/DevExpress.Blazor.GridXlExportOptions.SheetName)**  
 Specifies a name of the sheet in the resulting document.
 
-## Files to Look At
+## Files to Review
 
 * [Index.razor](./CS/Pages/Index.razor)
 
