@@ -7,15 +7,17 @@
 @inject IDbContextFactory<NorthwindContext> NorthwindContextFactory
 @implements IDisposable
 
-<DxGrid @ref="Grid"
-        CustomizeCellDisplayText="Grid_CustomizeCellDisplayText" 
-        Data="@Data">
+<DxGrid @ref="Grid" Data="@Data">
     <Columns>
         <DxGridDataColumn FieldName="ProductName" Width="30%" />
-        <DxGridDataColumn FieldName="CategoryId" Width="10%" SortMode="GridColumnSortMode.DisplayText" Caption="Category" />
+        <DxGridDataColumn FieldName="CategoryId" Width="10%" Caption="Category">
+            <EditSettings>
+                <DxComboBoxSettings Data="Categories" ValueFieldName="CategoryId" TextFieldName="CategoryName" />
+            </EditSettings>
+        </DxGridDataColumn>
         <DxGridDataColumn FieldName="QuantityPerUnit" Width="20%" />
         <DxGridDataColumn FieldName="UnitPrice" Width="10%" DisplayFormat="c" />
-        <DxGridDataColumn FieldName="UnitsInStock" Width="10%" />       
+        <DxGridDataColumn FieldName="UnitsInStock" Width="10%" />
         <DxGridDataColumn FieldName="Total" Width="10%" UnboundType="GridUnboundColumnType.Decimal" DisplayFormat="c"
                           UnboundExpression="[UnitPrice] * [UnitsInStock]"  />
         <DxGridDataColumn FieldName="Discontinued" Width="10%" ExportEnabled="false" />
@@ -27,17 +29,12 @@
     IGrid Grid { get; set; }
     NorthwindContext Northwind { get; set; }
     IEnumerable<Product> Data { get; set; }
-    Dictionary<int, String> Categories { get; set; }
+    IEnumerable<Category> Categories { get; set; }
 
     protected override async Task OnInitializedAsync() {
         Northwind = NorthwindContextFactory.CreateDbContext();
-        Categories = await Northwind.Categories.ToDictionaryAsync(i => i.CategoryId, i => i.CategoryName);
+        Categories = await Northwind.Categories.ToListAsync();
         Data = await Northwind.Products.ToListAsync();       
-    }
-
-    void Grid_CustomizeCellDisplayText(GridCustomizeCellDisplayTextEventArgs e) {
-        if (e.FieldName == "CategoryId")
-            e.DisplayText = Categories[Convert.ToInt32(e.Value)];
     }
 
     async Task ExportXlsx_Click() {
@@ -95,7 +92,7 @@
         e.Sheet.PageMargins.Right = 3.0;
         e.Sheet.PageMargins.Top = 3.25;
         e.Sheet.PageMargins.Bottom = 3.25;
-        e.Sheet.PageSetup.PaperKind = System.Drawing.Printing.PaperKind.A4;
+        e.Sheet.PageSetup.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.A4;
         e.Sheet.PageSetup.PageOrientation = DevExpress.Export.Xl.XlPageOrientation.Landscape;
         e.Sheet.PrintTitles.SetColumns(0, 0);
         e.Sheet.PrintTitles.SetRows(0, 0);
