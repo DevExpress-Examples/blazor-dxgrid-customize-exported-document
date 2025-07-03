@@ -8,7 +8,7 @@
 
 This example demonstrates how to export [DevExpress Blazor Grid](https://docs.devexpress.com/Blazor/403143/grid) data to an XLSX file and customize the export result.
 
-![Export Grid Data](export-grid-data.gif)
+![Export Grid Data](export-grid-data.png)
 
 ## Overview
 
